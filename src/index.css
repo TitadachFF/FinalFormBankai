@@ -1,0 +1,48 @@
+/* Apply box-sizing to all elements */
+* {
+    box-sizing: border-box;
+}
+
+/* Reset body styles and set overall page styles */
+body {
+    margin: 0;
+    padding: 2rem 5rem;
+    text-align: center;
+    background-color: rgb(121, 163, 187);
+    color: rgb(196, 181, 181);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 100;
+    font-size: 16px;
+}
+
+/* Style the main heading */
+h1 {
+    font-family: cursive;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+}
+
+/* Style the container for restaurants */
+.restaurants {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Style individual restaurant images */
+.restaurants > img {
+    flex: 1;
+    object-fit: cover;
+    margin: auto;
+}
+
+/* Style input elements */
+input {
+    border: 1px solid rgb(182, 182, 182);
+    border-radius: 24px;
+    width: 50%;
+    padding: 1rem; /* Adjust padding for better appearance */
+    margin: 0 auto; /* Center horizontally */
+    font-size: 100%;
+}

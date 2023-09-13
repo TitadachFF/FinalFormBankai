@@ -1,39 +1,48 @@
-import {useState, useEffect} from 'react';
-import {Link} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-const URL = import.meta.env.VITE_BASE_URL;
+import Card from '../components/Card';
+
+const url = import.meta.env.VITE_BASE_URL;
 const USERNAME = import.meta.env.VITE_BASE_USERNAME;
 const PASSWORD = import.meta.env.VITE_BASE_PASSWORD;
-const config={
-    auth:{
+
+const config = {
+    auth: {
         username: USERNAME,
         password: PASSWORD,
-        
     },
 };
 
-
-const Restautant = () => {
+const Restaurant = () => {
     const [restaurants, setRestaurants] = useState([]);
-    useEffect(()=>{
-        const fetchAllRestaurants = async()=>{
-            try{
-                const res = await axios.get(`${URL}/restaurants`,config);
+
+    useEffect(() => {
+        const fetchAllRestaurant = async () => {
+            try {
+                const res = await axios.get(`${url}/restaurants`, config);
                 setRestaurants(res.data);
-            }catch(error){
-                console.log(error);
+            } catch (error) {
+                console.error(error);
             }
-
-            
         };
-        fetchAllRestaurants();
+        fetchAllRestaurant();
+    }, []);
 
+    return (
+        <div>
+            <h1>Restaurant</h1>
+            <div className='row'>
+                <div className='restaurants'>
+                    {restaurants.map(restaurant => {
+                        return (
+                            <Card restaurant={restaurant} key={restaurant.id} />
+                        );
+                    })}
+                </div>
+            </div>
+        </div>
+    );
+};
 
-    },[])
-
-  return (
-    <div>Restautant</div>
-  )
-}
-
-export default Restautant
+export default Restaurant;
