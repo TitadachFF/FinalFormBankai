@@ -55,4 +55,4 @@ const Restaurant = () => {
   )
 }
 
-export default Restaurant
+export default Restaurant;

@@ -46,3 +46,7 @@ input {
     margin: 0 auto; /* Center horizontally */
     font-size: 100%;
 }
+.form {
+    justify-content: center;
+  }
+  
