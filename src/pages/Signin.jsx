@@ -2,89 +2,85 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const SignIn = () => {
-  const [formData, setFormData] = useState({
-    username: '',
+const URL = import.meta.env.VITE_BASE_URL;
+
+const Signin = () => {
+  const [user, setUser] = useState({
+    email: '',
     password: '',
   });
-
   const navigate = useNavigate();
+  const [error, setError] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSignIn = async () => {
-    // Your sign-in logic using Axios here
+  const handleSignin = async (e) => {
+    e.preventDefault();
     try {
-      // Send a POST request to your authentication endpoint
-      const response = await axios.post('YOUR_API_ENDPOINT', formData);
+      // Send a POST request to the sign-in endpoint with user credentials (email and password).
+      await axios.post(`${URL}/signin`, user);
 
-      // Assuming your API returns a token upon successful sign-in
-      const token = response.data.token;
-
-      // Store the token in local storage or a state management solution like Redux
-      // Example with local storage:
-      localStorage.setItem('token', token);
-
-      // Redirect to a protected route or the user's dashboard
+      // Assuming successful sign-in, you can navigate to a dashboard or profile page.
       navigate('/dashboard');
     } catch (error) {
-      // Handle sign-in errors (e.g., incorrect credentials)
       console.error(error);
+      setError(true);
     }
   };
 
   return (
-    <div className="card">
-      <div className="card-body">
-        <h2 className="card-title">Sign In</h2>
-        <form>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
+    <div className="container">
+      <h1>Sign In</h1>
+      <div className="row form">
+        <div className="col-6 card justify-content-center">
+          <h5 className="card-header">Login to Your Account</h5>
+          {/* <div className="error">{error && 'Incorrect email or password.'}</div> */}
+          <div className="card-body">
+            <form>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  name="email"
+                  placeholder="Email"
+                  onChange={handleChange}
+                  value={user.email}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  placeholder="Password"
+                  onChange={handleChange}
+                  value={user.password}
+                />
+              </div>
+
+              <button
+                type="submit"
+           
+                className="btn btn-success"
+                onClick={handleSignin}
+              >
+                Sign In
+              </button>
+
+              <Link to="/signup" className="btn btn-secondary">
+                Don't have an account? Sign Up
+              </Link>
+            </form>
           </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={handleSignIn}
-          >
-            Sign In
-          </button>
-          <Link to="/" className="btn btn-secondary ml-2">
-            Cancel
-          </Link>
-        </form>
-        <p>
-          Don't have an account? <Link to="/signup">Sign Up</Link>
-        </p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default SignIn;
+export default Signin;

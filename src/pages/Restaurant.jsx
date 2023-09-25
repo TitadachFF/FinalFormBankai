@@ -29,7 +29,7 @@ const Restaurant = () => {
 
     const handDelete = async (id) =>{
         try {
-            await axios.delete(`${URL}/restaurants/${id}`, config);
+            await axios.delete(`${URL}/restaurant/${id}`, config);
             window.location.reload();
         } catch (error) {
             console.error(error);
@@ -45,7 +45,7 @@ const Restaurant = () => {
                     restaurants.map(restaurant =>{
                         return(
                             <Card restaurant={restaurant} 
-                            key={restaurant.id}/>
+                            key={restaurant.id} handelDelete={handDelete}/>
                         );
                     })
                 }

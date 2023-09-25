@@ -1,114 +1,107 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const URL = import.meta.env.VITE_BASE_URL;
+const USERNAME = import.meta.env.VITE_BASE_USERNAME;
+const PASSWORD = import.meta.env.VITE_BASE_PASSWORD;
+
 const Signup = () => {
-  const [formData, setFormData] = useState({
+  const [user, setUser] = useState({
     username: '',
     email: '',
     password: '',
-    confirmPassword: '',
   });
+  const navigate = useNavigate();
+  const [error, setError] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-
-    // Validate that password and confirmPassword match
-    if (formData.password !== formData.confirmPassword) {
-      console.error("Passwords do not match");
-      return;
-    }
-
-    // Your sign-in logic using Axios here
-
     try {
-      // Send a POST request to your authentication endpoint
-      const response = await axios.post('YOUR_API_ENDPOINT', formData);
-
-      // Assuming your API returns a token upon successful sign-in
-      const token = response.data.token;
-
-      // Store the token in local storage or a state management solution like Redux
-      // Example with local storage:
-      localStorage.setItem('token', token);
-
-      // Redirect to a protected route or the user's dashboard
-      // You can implement this based on your application structure
-      console.log("Sign in successful");
+      await axios.post(`${URL}/signup`, user);
+      // Assuming successful signup, you can navigate to a success page or login page.
+      navigate('/login');
     } catch (error) {
-      // Handle sign-in errors (e.g., incorrect credentials)
       console.error(error);
+      setError(true);
     }
   };
 
   return (
-    <div className="card" style={{ width: '18rem' }}>
-      <div className="card-body">
-        <h5 className="card-title">Sign Up</h5>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
+    <div className="container">
+      <h1>Signup</h1>
+      <div className="row form">
+        <div className="col-6 card justify-content-center">
+          <h5 className="card-header">Create an Account</h5>
+          {/* <div className="error">{error && 'Something went wrong.'}</div> */}
+          <div className="card-body">
+            <form>
+              <div className="form-group">
+                <label htmlFor="username">Username</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="username"
+                  placeholder="Username"
+                  onChange={handleChange}
+                  value={user.username}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  name="email"
+                  placeholder="Email"
+                  onChange={handleChange}
+                  value={user.email}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  placeholder="Password"
+                  onChange={handleChange}
+                  value={user.password}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Confirm Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  placeholder="Password"
+                  onChange={handleChange}
+                  value={user.password}
+                />
+              </div>
+
+            
+              <Link to="/signin"
+                type="submit"
+                className="btn btn-success"
+                onClick={handleSignup}
+              >
+                Signup
+              </Link>
+
+              <Link to="/signin" className="btn btn-secondary">
+                Already have an account? Login
+              </Link>
+            </form>
           </div>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              className="form-control"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Sign Up
-          </button>
-        </form>
-        <Link to="/" className="btn btn-danger mt-2">
-          Cancel
-        </Link>
+        </div>
       </div>
     </div>
   );

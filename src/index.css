@@ -8,7 +8,7 @@ body {
     margin: 0;
     padding: 2rem 5rem;
     text-align: center;
-    background-color: rgb(121, 163, 187);
+    background-color: rgb(68, 68, 68);
     color: rgb(196, 181, 181);
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 100;
@@ -28,6 +28,7 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    
 }
 
 /* Style individual restaurant images */
@@ -49,4 +50,6 @@ input {
 .form {
     justify-content: center;
   }
-  
+  .navbar {
+    border-radius: 20px;
+  }
