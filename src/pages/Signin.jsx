@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
-const URL = import.meta.env.VITE_BASE_URL;
+import AuthService from '../services/auth.service';
 
 const Signin = () => {
   const [user, setUser] = useState({
@@ -19,11 +17,12 @@ const Signin = () => {
   const handleSignin = async (e) => {
     e.preventDefault();
     try {
+      const login = await AuthService.login(user.username,user.password);
       // Send a POST request to the sign-in endpoint with user credentials (email and password).
-      await axios.post(`${URL}/signin`, user);
+      // await axios.post(`${URL}/signin`, user);
 
       // Assuming successful sign-in, you can navigate to a dashboard or profile page.
-      navigate('/dashboard');
+      navigate('/');
     } catch (error) {
       console.error(error);
       setError(true);
@@ -40,14 +39,14 @@ const Signin = () => {
           <div className="card-body">
             <form>
               <div className="form-group">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="user">Username</label>
                 <input
-                  type="email"
+                  type="user"
                   className="form-control"
-                  name="email"
-                  placeholder="Email"
+                  name="user"
+                  placeholder="Username"
                   onChange={handleChange}
-                  value={user.email}
+                  value={user.username}
                 />
               </div>
 
@@ -62,7 +61,7 @@ const Signin = () => {
                   value={user.password}
                 />
               </div>
-
+<br />
               <button
                 type="submit"
            
@@ -71,7 +70,7 @@ const Signin = () => {
               >
                 Sign In
               </button>
-
+              &nbsp;
               <Link to="/signup" className="btn btn-secondary">
                 Don't have an account? Sign Up
               </Link>

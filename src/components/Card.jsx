@@ -25,4 +25,4 @@ const Card = ({restaurant,handelDelete}) => {
   )
 }
 
-export default Card
+export default Card;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import AuthService from '../services/auth.service';
 
 const URL = import.meta.env.VITE_BASE_URL;
 const USERNAME = import.meta.env.VITE_BASE_USERNAME;
@@ -11,10 +11,11 @@ const Signup = () => {
     username: '',
     email: '',
     password: '',
+    confirmpassword:'',
   });
   const navigate = useNavigate();
   const [error, setError] = useState(false);
-
+  const [ErrorMessage, setErrorMessage] = useState({message: ""});
   const handleChange = (e) => {
     setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -22,12 +23,20 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${URL}/signup`, user);
+      if (user.confirmpassword === user.password) {
+        const register = await AuthService.register
+        (user.username, user.email, user.password);
+        navigate("/signin");
+      } else {
+        setError(true);
+        setErrorMessage({ message: "Failed Password mis"})
+      }
       // Assuming successful signup, you can navigate to a success page or login page.
-      navigate('/login');
+     
     } catch (error) {
       console.error(error);
       setError(true);
+      setErrorMessage(error.response.data);
     }
   };
 
@@ -76,17 +85,17 @@ const Signup = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="password">Confirm Password</label>
+                <label htmlFor="confirmpassword">Confirm Password</label>
                 <input
                   type="password"
                   className="form-control"
-                  name="password"
-                  placeholder="Password"
+                  name="confirmpassword"
+                  placeholder="Confirm Password"
                   onChange={handleChange}
-                  value={user.password}
+                  value={user.confirmpassword}
                 />
               </div>
-
+<br />
             
               <Link to="/signin"
                 type="submit"
@@ -95,7 +104,7 @@ const Signup = () => {
               >
                 Signup
               </Link>
-
+              &nbsp;
               <Link to="/signin" className="btn btn-secondary">
                 Already have an account? Login
               </Link>
