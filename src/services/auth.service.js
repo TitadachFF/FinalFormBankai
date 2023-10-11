@@ -24,7 +24,7 @@ const login =  async (username, password) =>{
         localStorage.setItem("token", JSON.stringify(response.data.accessToken));
 
     }
-    return response;
+    return response.data;
 };
 const register = async (username, email, password) =>{
     return await axios.post(API_URL + "signup", 

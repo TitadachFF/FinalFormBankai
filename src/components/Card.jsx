@@ -17,6 +17,7 @@ const Card = ({restaurant,handelDelete}) => {
                 }}>
                   Delete
               </Link>
+              &nbsp;
               <Link to={`/Update/${restaurant.id}`} className='btn btn-warning px-2'>
                   Edit
               </Link>

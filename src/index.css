@@ -8,8 +8,8 @@ body {
     margin: 0;
     padding: 2rem 5rem;
     text-align: center;
-    background-color: rgb(68, 68, 68);
-    color: rgb(196, 181, 181);
+    background-color: rgb(2, 3, 7);
+    color: rgb(181, 196, 194);
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 100;
     font-size: 16px;
@@ -25,17 +25,22 @@ h1 {
 
 /* Style the container for restaurants */
 .restaurants {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+ display: flex;
+  flex-wrap: wrap;
+  color: black;
+  justify-content: center;
+  padding: 0px;
+
+
     
 }
 
 /* Style individual restaurant images */
 .restaurants > img {
-    flex: 1;
-    object-fit: cover;
-    margin: auto;
+      flex: 1;
+  object-fit: cover;
+  margin: auto;
+
 }
 
 /* Style input elements */
@@ -52,4 +57,17 @@ input {
   }
   .navbar {
     border-radius: 20px;
+  }
+  .card{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+   margin-left: 20px;
+  }
+  .badge{
+    color: black;
   }
