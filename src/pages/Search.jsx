@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import authHeader from '../services/auth.header';
 
 const URL = import.meta.env.VITE_BASE_URL;
 const USERNAME = import.meta.env.VITE_BASE_USERNAME;
 const PASSWORD = import.meta.env.VITE_BASE_PASSWORD;
+const config = {
+    auth: {
+        username: USERNAME,
+        password: PASSWORD,
+    },
+    headers:authHeader()
+};
+
 const Search = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -17,7 +26,7 @@ const Search = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`${url}/restaurants`, {
+      const response = await axios.get(`${URL}/restaurants`, {
         params: {
           search: searchTerm,
         },
