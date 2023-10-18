@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthService from '../services/auth.service';
+import axios from 'axios';
 import { useAuthContext } from '../context/AuthContext';
 
 const Signin = () => {
@@ -22,6 +23,8 @@ const Signin = () => {
       const currentUser = await AuthService.login(user.username, user.password);
       login(currentUser);
       navigate('/profile');
+      await axios.post(`${URL}/signin`, user);
+      navigate('/dashboard');
     } catch (error) {
       console.error(error);
       setError(true);

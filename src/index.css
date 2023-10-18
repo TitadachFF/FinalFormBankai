@@ -8,7 +8,7 @@ body {
     margin: 0;
     padding: 2rem 5rem;
     text-align: center;
-    background-color: rgb(2, 3, 7);
+    background-color: #001d39;
     color: rgb(181, 196, 194);
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 100;
@@ -21,6 +21,7 @@ h1 {
     text-align: center;
     color: rgb(255, 255, 255);
     font-size: 2rem;
+   
 }
 
 /* Style the container for restaurants */
@@ -70,4 +71,12 @@ input {
   }
   .badge{
     color: black;
+  }
+  .card{
+    margin-top: 20px;
+  }
+  .blur{
+    position: absolute;
+    box-shadow: 0 0 100px 50px #1d4ed8;
+    z-index: -100;
   }
