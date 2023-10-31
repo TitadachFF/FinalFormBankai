@@ -1,19 +1,8 @@
 import React, {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import authHeader from '../services/auth.header';
+import api from "../services/api"
 
-const URL = import.meta.env.VITE_BASE_URL;
-const USERNAME = import.meta.env.VITE_BASE_USERNAME;
-const PASSWORD = import.meta.env.VITE_BASE_PASSWORD;
-const config = {
-  auth: {
-    username: USERNAME,
-    password: PASSWORD,
-  },
- 
-  headers: authHeader(),
-};
+
 
 const Add = () => {
   const [restaurant, setRestaurant] =useState({
@@ -32,7 +21,7 @@ const Add = () => {
   const handleClick = async (e) =>{
     e.preventDefault();
     try {
-      await axios.post(`${URL}/restaurants`,restaurant,config);
+      await axios.post(`/restaurants`,restaurant,config);
       navigate('/');
     } catch (error) {
       console.error(error);
@@ -102,4 +91,4 @@ const Add = () => {
   )
 }
 
-export default Add;
+export default Add

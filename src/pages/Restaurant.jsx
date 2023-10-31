@@ -18,7 +18,7 @@ const config = {
 const Restaurant = () => {
   const [restaurants, setRestaurants] = useState([]);
   useEffect(() => {
-    const fetcAllRestaurant = async () => {
+    const fetchAllRestaurant = async () => {
       try {
         const res = await axios.get(`${URL}/restaurants`, config);
         setRestaurants(res.data);
@@ -26,7 +26,7 @@ const Restaurant = () => {
         console.error(error);
       }
     };
-    fetcAllRestaurant();
+    fetchAllRestaurant();
   }, []);
 
   const handDelete = async (id) => {
